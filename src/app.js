@@ -8,6 +8,7 @@ const forecast = require('./utils/forecast')
 //console.log(path.join(__dirname,'../public'))
 
 const app = express()
+const port=process.env.PORT || 3000
 const publicDirectoryPath=path.join(__dirname,'../public')
 const viewsPath=path.join(__dirname,'../templates/views')
 const partialsPath=path.join(__dirname,'../templates/partials')
@@ -109,6 +110,6 @@ app.get('*',(req,res)=> {
 	})
 })
 
-app.listen(3000,() => {
+app.listen(port,() => {
 	console.log('Il server è attivo sulla porta 3000');
 });
