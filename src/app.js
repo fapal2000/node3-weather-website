@@ -9,6 +9,9 @@ const forecast = require('./utils/forecast')
 
 const app = express()
 const port=process.env.PORT || 3000
+
+const proxy=process.env.HTTP_PROXY 
+
 const publicDirectoryPath=path.join(__dirname,'../public')
 const viewsPath=path.join(__dirname,'../templates/views')
 const partialsPath=path.join(__dirname,'../templates/partials')
@@ -46,7 +49,7 @@ app.get('',(req,res)=> {
 })
 app.get('/about',(req,res)=> {
 	res.render('about',{
-		title:'Giulia',
+		title:'About',
 		name:'Isabella',
 		footermsg : 'Creata da Fabrizio'
 	})
@@ -60,14 +63,14 @@ app.get('/wheater',(req,res)=> {
 			footermsg : 'Creata da Fabrizio'
 		})
 	}
-	geocode(req.query.address, (error, {location,latitude,longitude} = {} ) => {
+	geocode(req.query.address, proxy ,(error, {location,latitude,longitude} = {} ) => {
         if (error) {
             return res.send({
 				error : error,
 			});
         }
 
-        forecast(latitude, longitude, (error, forecastData) => {
+        forecast(latitude, longitude, proxy, (error, forecastData) => {
             if (error) {
                 return res.send({
 					error : error,
@@ -111,5 +114,5 @@ app.get('*',(req,res)=> {
 })
 
 app.listen(port,() => {
-	console.log('Il server è attivo sulla porta 3000');
+	console.log('Il server è attivo sulla porta 3000 con proxy = ' + proxy);
 });
