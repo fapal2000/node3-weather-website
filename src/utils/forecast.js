@@ -1,10 +1,11 @@
 const request = require('request')
 
 const forecast = (latitude, longitude, callback) => {
-	const proxy = "http://palmaf:isabella88@138.132.88.109:8080";
+	//const proxy = "http://palmaf:isabella88@138.132.88.109:8080";
     const url = 'https://api.darksky.net/forecast/4114b21ca098549eb5e3c2e5381f7142/' + latitude + ',' + longitude +'?lang=it&units=si'
 
-    request({ url: url, json: true,proxy: proxy}, (error, response) => {
+    //request({ url: url, json: true,proxy: proxy}, (error, response) => {
+	request({ url: url, json: true }, (error, response) => {
         if (error) {
             callback('Unable to connect to weather service!', undefined)
         } else if (response.body.error) {
